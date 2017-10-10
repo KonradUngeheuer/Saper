@@ -27,9 +27,6 @@ from tkinter import ttk
 import os
 import random
 
-#import pictureLoader
-#random.seed(1)#for testing purposes only
-
 class GameWindow(object):
     '''
     Prepare FileForm and HelpForm, create GameFrame
@@ -37,24 +34,21 @@ class GameWindow(object):
 
     #game state (Player can be alive or he had found the mine already :P he may won eventualy too ;]) and other strings in one place
         #those are intended to be Constant#
-#przerobic
     WIN     = ':]'
     LOST    = 'X['
     PLAY    = ':)'
     GUES    = '8|'#for now it wont be used
     CAT     = ':3'
     START   = ''
-    #strings
     TKSAPER = 'tksaper'
     RIGHTS = '''
 tksaper
 Demo project in python3
 Author: Konrad Ungeheuer
-You have no rights
-2013-2013
+Mail: konrad.ungeheuer@gmail.com
 '''
 
-        ###################################
+
     def gameState(self, state, posX = None, posY = None):
         '''seting statusOfGame to given state, changing description, stopping game'''
         assert state in (GameWindow.WIN, GameWindow.LOST, GameWindow.PLAY, GameWindow.GUES, GameWindow.CAT, GameWindow.START)
@@ -82,9 +76,8 @@ You have no rights
 
     def startGame(self, sizeX=10, sizeY=10, mineNumber=40):
         '''Starting the game and changing any statusOfGame to PLAY, destroy widgets in GameWindow and proceed with new one's'''
-#        assert type(sizeX) == type(sizeY) == type(mineNumber) == type(int)
+        
         assert min(sizeX, sizeY, mineNumber) > 1
-#        print('Start(sizeX {0}, sizeY {1},  mineNumber {2})'.format(sizeX, sizeY, mineNumber))
         self.gameFrame.destroy()#first gameFrame will be destroyed and then we create it again and inside we put GameFrame internal ttk.Frame
         
         self.gameFrame = ttk.Frame(self.master)#re-initialize
@@ -119,7 +112,6 @@ You have no rights
     
     def __init__(self, master):
         
-        #path's needet to load files (and save)
         #self.path = os.path.dirname(__file__)
 
         #now we load all needed pictures, they are listed one by one to prevent doubt when the script is 
@@ -142,7 +134,6 @@ You have no rights
         except:
             quit('Can\'t load image(s)')
 
-        
             #root
         self.master=master
         
@@ -155,7 +146,7 @@ You have no rights
 
         #create a main menu for game, takes root as a master
         self.master.option_add('*tearOff', False)#trick preventing menu tearing off
-        self.Bar = Menu(self.master)    #will be the main menu bar of root window
+        self.Bar = Menu(self.master)    #main menu bar of root window
 
         self.File = Menu(self.Bar)  #start menu
         self.Help = Menu(self.Bar)  #help menu
@@ -181,7 +172,6 @@ You have no rights
         self.Title = ttk.Label(self.gameFrame, text = 'Wybierz rozmiar planszy')
         self.Title.grid(column=0, row=0, columnspan=2)
 
-        
         #starting buttons
         self.Button = ttk.Button(self.gameFrame, text = 'Start 8x8 - 5',   command=lambda:self.startGame(8,  8,  5))#start game 8x8 with 5 mines
         self.Button.grid(column=0, row=1, sticky=(N, S, W, E))
@@ -205,16 +195,12 @@ class GameFrame(object):
         self.sizeX = sizeX
         self.sizeY = sizeY
         self.mineNumber = mineNumber
-        #print(self.mineNumber)
         self.blankQuantity = self.sizeX*self.sizeY - self.mineNumber # using this number we going to calculate end game conditions
-        #print(self.blankQuantity)
         self.counter = self.blankQuantity # we will distract from this one until self.mineNumber will be reached
-
         self.frame = Frame(self.master)
         self.frame.grid(column=0, row=0, sticky=(N, S, W, E))
         #we prepare random list of bool walues, using mineNumber and sizeXY
         mineLocation = [True]*self.mineNumber + [False]*((self.sizeX*self.sizeY)-self.mineNumber)#one dimensional list with location of the mines, used once to initialize GameButton's
-#        print(len(mineLocation))
         random.shuffle(mineLocation)
         #initialization of arrays needed for calcualteNeighbours and flip...
 
@@ -259,19 +245,17 @@ class GameFrame(object):
         if self.mineArray[posX][posY]:
             return 1
         returnVal = 0
-        #we start from '12'h and procedd clokwise, bacause of no size assumptions we going to check everything
+        #we start from '12'h and procedd clokwise, bacause there is no size assumptions we are going to check everything
         for coordinates in self.neighbourIndexGen(posX, posY, self.sizeX, self.sizeY, '8'):
             if self.mineArray[coordinates[0]][coordinates[1]]:
                 returnVal+=1
         return returnVal
 
     def zeroNeighbour(self, posX, posY):
-        #print(posX, posY)
         if self.gameArray[posX][posY].getNeighbours() == 0:
             return True
         
         if self.gameArray[posX][posY].getMine():
-#            print(posX, posY, 'Iterator not called')
             return False
 
         for coordinates in self.neighbourIndexGen(posX, posY, self.sizeX, self.sizeY, '8'):
@@ -298,7 +282,6 @@ class GameFrame(object):
             for item in col:
                 if item.isOk():
                     correctMarks += 1
-        #print(correctMarks)
         if correctMarks == self.mineNumber:
             return True
         else:
@@ -330,7 +313,6 @@ class GameButton(object):
         self.master = master
         self.game = game
         GameButton.LABELLIST = self.game.window.pictureList
-        #self.window = window
         self.posX = posX
         self.posY = posY
         self.mine = mine#if =True then posX, posY has mine =False otherwise
@@ -346,7 +328,7 @@ class GameButton(object):
         self.button.bind('<3>', lambda e :self.setMark())
         self.button.grid(column = 0, row = 0)
 
-    def setMark(self):#here need to check is this posible or is game ended !
+    def setMark(self):#here we need to check is this posible or is the game ended !
         if self.mark:
             self.mark = False
             self.button['image'] = GameButton.LABELLIST[0]
@@ -366,7 +348,7 @@ class GameButton(object):
     def getNeighbours(self):
         return self.neighbours
 
-    def autoFlip(self):#only function witch flip buttons
+    def autoFlip(self):#the only function fliping buttons
         if not self.active:
             return
 
@@ -375,7 +357,6 @@ class GameButton(object):
             #now we set proper label(for now)
         self.game.counter -= 1#we count fliped buttons
         self.isGameFinished()
-        #print(self.game.counter)
         if self.mark:
             if self.mine:
                 index = 11#this index will be used to show proper label - picture from GameButton.LABELLIST
@@ -391,14 +372,12 @@ class GameButton(object):
         return self.mark and self.mine and self.active
 
     def playerFlip(self):
-        #self.active = False
         if self.mine and not self.mark:
             self.game.window.gameState(GameWindow.LOST)
         else:
             if  not self.mark:
                 self.game.window.gameState(GameWindow.PLAY, self.posX, self.posY)
                 self.autoFlip()
-        #print('fliping', self.posX, self.posY, self.mine)
         self.isGameFinished()
 
     def getMine(self):
