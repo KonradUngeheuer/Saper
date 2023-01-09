@@ -169,7 +169,7 @@ Mail: konrad.ungeheuer@gmail.com
         self.gameFrame.grid(row = 0, column = 0)#, sticky = (N, S, W, E))
 
 
-        self.Title = ttk.Label(self.gameFrame, text = 'Wybierz rozmiar planszy')
+        self.Title = ttk.Label(self.gameFrame, text = 'Choose the board size')
         self.Title.grid(column=0, row=0, columnspan=2)
 
         #starting buttons
@@ -263,7 +263,7 @@ class GameFrame(object):
         return False
 
     def flipSome(self, posX, posY):
-        """Obraca pola sasiadujace z podanym (posX, posY) jesli te sasiaduja z pustym polem"""
+        """Flip field -> (posX, posY) if it has empty neighbour"""
         if self.zeroNeighbour(posX, posY):
             self.gameArray[posX][posY].autoFlip()
             if self.gameArray[posX][posY].getNeighbours() == 0:
