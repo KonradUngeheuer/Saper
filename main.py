@@ -1,7 +1,7 @@
 # Saper game in Python3 using tkinter
 # by Konrad Ungeheuer
 
-# Copyright (c) 2017 Konrad Ungeheuer
+# Copyright (c) 2017-2023 Konrad Ungeheuer
 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -24,14 +24,13 @@
 import sys
 from tkinter import *
 from tkinter import ttk
-import os
+# import os
 import random
 
 class GameWindow(object):
     '''
     Prepare FileForm and HelpForm, create GameFrame
     '''
-
     #game state (Player can be alive or he had found the mine already :P he may won eventualy too ;]) and other strings in one place
         #those are intended to be Constant#
     WIN     = ':]'
@@ -47,7 +46,6 @@ Demo project in python3
 Author: Konrad Ungeheuer
 Mail: konrad.ungeheuer@gmail.com
 '''
-
 
     def gameState(self, state, posX = None, posY = None):
         '''seting statusOfGame to given state, changing description, stopping game'''
@@ -155,7 +153,7 @@ Mail: konrad.ungeheuer@gmail.com
         self.Bar.add_cascade(menu = self.Help, label='Help')
 
         self.File.add_command(label='Exit', command=self.exitGame)    #help menu item "Exit"
-        self.File.add_command(label='Start 8x8 - 5'  , command=lambda:self.startGame(8,  8,  5))#start game 8x85 with 5 mines
+        self.File.add_command(label='Start 8x8 - 5'   , command=lambda:self.startGame(8,  8,  5))#start game 8x85 with 5 mines
         self.File.add_command(label='Start 10x10 - 20', command=lambda:self.startGame(10, 10, 20))#--||--
         self.File.add_command(label='Start 15x15 - 30', command=lambda:self.startGame(15, 15, 30))#--||--
 
@@ -204,14 +202,14 @@ class GameFrame(object):
         random.shuffle(mineLocation)
         #initialization of arrays needed for calcualteNeighbours and flip...
 
-        self.mineArray = [[] for z in range(self.sizeX)]
+        self.mineArray = [[] for _ in range(self.sizeX)]
         iterator = 0
         for i in range(self.sizeX):
             for j in range(self.sizeY):
                 self.mineArray[i].append(mineLocation[iterator])
                 iterator += 1
                 
-        self.gameArray = [[] for i in range(self.sizeX)]
+        self.gameArray = [[] for _ in range(self.sizeX)]
 
         for i in range(self.sizeX):
             for j in range(self.sizeY):
@@ -394,5 +392,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
