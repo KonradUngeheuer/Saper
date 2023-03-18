@@ -180,6 +180,7 @@ class GameFrame(object):
     Prepare game basing on data from FileForm and react on GameState change
     '''
     def __init__(self, master, window, sizeX, sizeY, mineNumber):
+        assert 0 < mineNumber <= sizeX * sizeY and sizeX > 0 and sizeY > 0 # sanity check
         self.master = master
         self.window = window
         self.sizeX = sizeX
@@ -189,16 +190,14 @@ class GameFrame(object):
         self.counter = self.blankQuantity # we will distract from this one until self.mineNumber will be reached
         self.frame = Frame(self.master)
         self.frame.grid(column=0, row=0, sticky=(N, S, W, E))
-        #we prepare random list of bool walues, using mineNumber and sizeXY
-        mineLocation = [True]*self.mineNumber + [False]*((self.sizeX*self.sizeY)-self.mineNumber)#one dimensional list with location of the mines, used once to initialize GameButton's
-        random.shuffle(mineLocation)
+        mineLocation = random.sample(range(sizeX*sizeY), k = self.mineNumber)
         #initialization of arrays needed for calcualteNeighbours and flip...
 
         self.mineArray = [[] for _ in range(self.sizeX)]
         iterator = 0
         for i in range(self.sizeX):
             for j in range(self.sizeY):
-                self.mineArray[i].append(mineLocation[iterator])
+                self.mineArray[i].append(iterator in mineLocation)
                 iterator += 1
                 
         self.gameArray = [[] for _ in range(self.sizeX)]
