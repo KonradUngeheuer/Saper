@@ -21,10 +21,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import sys
+
 from tkinter import *
 from tkinter import ttk
-# import os
 import random
 
 class GameWindow(object):
@@ -102,7 +101,6 @@ Mail: konrad.ungeheuer@gmail.com
         self.label.pack()
         self.okButton.pack()
         self.okButton.focus()
-
         self.isHelpOpen = True
 
     def exitGame(self):
@@ -383,7 +381,6 @@ class GameButton(object):
 
 
 def main():
-    print(sys.version)
     root=Tk()
     root.title('tksaper')
     root.resizable(False, False)
