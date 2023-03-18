@@ -21,8 +21,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import profile
-
 
 from tkinter import *
 from tkinter import ttk
@@ -371,4 +369,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    #profile.run("main()")
