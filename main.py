@@ -35,8 +35,6 @@ class GameWindow(object):
     WIN     = ':]'
     LOST    = 'X['
     PLAY    = ':)'
-    GUES    = '8|'#for now it wont be used
-    CAT     = ':3'
     START   = ''
     TKSAPER = 'tksaper'
     RIGHTS = '''
@@ -48,7 +46,7 @@ Mail: konrad.ungeheuer@gmail.com
 
     def gameState(self, state, posX = None, posY = None):
         '''seting statusOfGame to given state, changing description, stopping game'''
-        assert state in (GameWindow.WIN, GameWindow.LOST, GameWindow.PLAY, GameWindow.GUES, GameWindow.CAT, GameWindow.START)
+        assert state in (GameWindow.WIN, GameWindow.LOST, GameWindow.PLAY, GameWindow.START)
         self.statusOfGame = state
 
         if self.statusOfGame == GameWindow.START:
@@ -62,12 +60,6 @@ Mail: konrad.ungeheuer@gmail.com
 
         if self.statusOfGame == GameWindow.PLAY:
             self.newGame.flipSome(posX, posY)
-
-        if self.statusOfGame == GameWindow.GUES:
-            print('Wath out ...')
-
-        if self.statusOfGame == GameWindow.CAT :
-            print('He he he ...')
 
         self.master.title(GameWindow.TKSAPER + ' ' + state)
 
