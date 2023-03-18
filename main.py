@@ -170,8 +170,8 @@ Mail: konrad.ungeheuer@gmail.com
         self.Button = ttk.Button(self.gameFrame, text = 'Start 15x15 - 30', command=lambda:self.startGame(15, 15, 30))#--||--
         self.Button.grid(column=0, row=2, sticky=(N, S, W, E))
 
-        self.Button = ttk.Button(self.gameFrame, text = 'Custom size',      command=self.startGame)#Custom size and mine number-not working yet
-        self.Button.grid(column=1, row=2, sticky=(N, S, W, E))
+        #self.Button = ttk.Button(self.gameFrame, text = 'Custom size',      command=self.startGame)#Custom size and mine number-not working yet
+        #self.Button.grid(column=1, row=2, sticky=(N, S, W, E))
         
 class GameFrame(object):
     '''
