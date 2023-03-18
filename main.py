@@ -333,7 +333,6 @@ class GameButton(object):
         if not self.active:#if button is inactive (flipped already) do nothing
             return
         self.active = False
-        self.button.destroy()#if button is destroyed then self.flip cannot be called again, so no need to check for existence of self.button
             #now we set proper label(for now)
         self.game.counter -= 1#we count fliped buttons
         self.isGameFinished()
