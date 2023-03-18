@@ -21,6 +21,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import profile
+
 
 from tkinter import *
 from tkinter import ttk
@@ -205,27 +207,18 @@ class GameFrame(object):
             for j in range(self.sizeY):
                 self.gameArray[i].append(GameButton(self.master, self, i, j, self.mineArray[i][j], self.calculateNeighbours(i, j)))
 
-    def neighbourIndexGen(self, posX, posY, sizeX, sizeY, neighbourhoodType):
+    def neighbourIndexGen(self, posX, posY, sizeX, sizeY):
         '''
-        Neighbours coordinate generator, it generete two types of neighbour index, standard all 8 neighbours and 4 axis neighbours.
+        Generate cooridinates of neighbouring cells(fields) all 8 of them.
         Yields tuple of two integers (x, y).
         '''
-        assert neighbourhoodType == '4' or neighbourhoodType == '8'
         #we start from '12'h and procedd clokwise, bacause of no size assumptions we going to check everything
         eightList = ((posX    ,posY - 1),(posX + 1,posY - 1),(posX + 1,posY    ),(posX + 1,posY + 1),(posX   ,posY + 1),(posX - 1,posY + 1),(posX - 1,posY    ),(posX - 1,posY - 1))
-        fourList =  ((posX    ,posY - 1),                    (posX + 1,posY    ),                    (posX   ,posY + 1),                    (posX - 1,posY    )                    )
-        
-        if neighbourhoodType == '8':
-            for indexXY in eightList:
-                if indexXY[0] >=0 and indexXY[0] < sizeX  and   indexXY[1] >=0 and indexXY[1] < sizeY:
-                    yield indexXY
 
-        if neighbourhoodType == '4':
-            for indexXY in fourList:
-                if indexXY[0] >=0 and indexXY[0] < sizeX  and   indexXY[1] >=0 and indexXY[1] < sizeY:
-                    yield indexXY
-                    
-
+        for indexXY in eightList:
+            if indexXY[0] >=0 and indexXY[0] < sizeX  and   indexXY[1] >=0 and indexXY[1] < sizeY:
+                yield indexXY
+           
     def calculateNeighbours(self, posX, posY):
         '''
         Will calculate number of mines in 8 positions touching posX, posY position
@@ -234,7 +227,7 @@ class GameFrame(object):
             return 1
         returnVal = 0
         #we start from '12'h and procedd clokwise, bacause there is no size assumptions we are going to check everything
-        for coordinates in self.neighbourIndexGen(posX, posY, self.sizeX, self.sizeY, '8'):
+        for coordinates in self.neighbourIndexGen(posX, posY, self.sizeX, self.sizeY):
             if self.mineArray[coordinates[0]][coordinates[1]]:
                 returnVal+=1
         return returnVal
@@ -246,7 +239,7 @@ class GameFrame(object):
         if self.gameArray[posX][posY].getMine():
             return False
 
-        for coordinates in self.neighbourIndexGen(posX, posY, self.sizeX, self.sizeY, '8'):
+        for coordinates in self.neighbourIndexGen(posX, posY, self.sizeX, self.sizeY):
             if self.gameArray[coordinates[0]][coordinates[1]].getNeighbours() == 0: return True
         return False
 
@@ -255,7 +248,7 @@ class GameFrame(object):
         if self.zeroNeighbour(posX, posY):
             self.gameArray[posX][posY].autoFlip()
             if self.gameArray[posX][posY].getNeighbours() == 0:
-                for coordinates in self.neighbourIndexGen(posX, posY, self.sizeX, self.sizeY, '8'):
+                for coordinates in self.neighbourIndexGen(posX, posY, self.sizeX, self.sizeY):
                     if self.gameArray[coordinates[0]][coordinates[1]].getActive() and self.zeroNeighbour(coordinates[0], coordinates[1]):
                         self.flipSome(coordinates[0], coordinates[1])
 
@@ -379,4 +372,4 @@ def main():
     root.mainloop()
 
 if __name__ == '__main__':
-    main()
+    profile.run("main()")
