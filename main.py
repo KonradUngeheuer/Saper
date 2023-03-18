@@ -320,7 +320,7 @@ class GameButton(object):
 
         self.frame = ttk.Frame(self.master)
         self.frame.grid(column=self.posX, row=self.posY, sticky=(N, S, W, E))
-        self.button = Button(self.frame, image=GameButton.LABELLIST[0], command=self.playerFlip)
+        self.button = Button(self.frame, image=GameButton.LABELLIST[0], command=self.playerFlip, width=32, height=32)
         self.button.bind('<3>', lambda e :self.setMark())
         self.button.grid(column = 0, row = 0)
 
@@ -332,11 +332,11 @@ class GameButton(object):
             self.mark = True
             self.button['image'] = GameButton.LABELLIST[12]
             self.isGameFinished()
+
     def isGameFinished(self):
         if self.game.counter == 0:
            if self.game.endGameCheck():
                self.game.window.gameState(GameWindow.WIN)
-
 
     def getActive(self):
         return self.active
@@ -345,9 +345,8 @@ class GameButton(object):
         return self.neighbours
 
     def autoFlip(self):#the only function fliping buttons
-        if not self.active:
+        if not self.active:#if button is inactive (flipped already) do nothing
             return
-
         self.active = False
         self.button.destroy()#if button is destroyed then self.flip cannot be called again, so no need to check for existence of self.button
             #now we set proper label(for now)
