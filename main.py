@@ -143,9 +143,9 @@ Mail: konrad.ungeheuer@gmail.com
         self.Bar.add_cascade(menu = self.Help, label='Help')
 
         self.File.add_command(label='Exit', command=self.exitGame)    #help menu item "Exit"
-        self.File.add_command(label='Start 8x8 - 5'   , command=lambda:self.startGame(8,  8,  5))#start game 8x85 with 5 mines
-        self.File.add_command(label='Start 10x10 - 20', command=lambda:self.startGame(10, 10, 20))#--||--
-        self.File.add_command(label='Start 15x15 - 30', command=lambda:self.startGame(15, 15, 30))#--||--
+        self.File.add_command(label='Start 8x8 - 5'   , command=lambda:self.startGame(8,  8,  5))#start game 8x8 with 5 mines
+        self.File.add_command(label='Start 10x10 - 20', command=lambda:self.startGame(10, 10, 20))
+        self.File.add_command(label='Start 15x15 - 30', command=lambda:self.startGame(15, 15, 30))
 
         self.Help.add_command(label='Help', command=self.helpGame)    #help menu item "Help"
 
