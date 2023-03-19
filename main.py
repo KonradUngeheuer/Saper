@@ -210,7 +210,10 @@ class GameFrame(object):
         Yields tuple of two integers (x, y).
         '''
         #we start from '12'h and procedd clokwise, bacause of no size assumptions we going to check everything
-        eightList = ((posX    ,posY - 1),(posX + 1,posY - 1),(posX + 1,posY    ),(posX + 1,posY + 1),(posX   ,posY + 1),(posX - 1,posY + 1),(posX - 1,posY    ),(posX - 1,posY - 1))
+        eightList = ((posX   ,posY - 1),(posX + 1,posY - 1),
+                    (posX + 1,posY    ),(posX + 1,posY + 1),
+                    (posX    ,posY + 1),(posX - 1,posY + 1),(posX - 1,posY    ),
+                    (posX - 1,posY - 1))
 
         for indexXY in eightList:
             if indexXY[0] >=0 and indexXY[0] < sizeX  and   indexXY[1] >=0 and indexXY[1] < sizeY:
